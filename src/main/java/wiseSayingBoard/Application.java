@@ -9,10 +9,16 @@ public class Application {
 
         while (true) {
             System.out.println("명령) ");
-            String command = scanner.next();
+            String command = scanner.nextLine();
 
             if (command.equals("종료")) {
                 break;
+            } else if (command.equals("등록")) {
+                System.out.println("명언 : ");
+                String wiseSaying = scanner.nextLine();
+
+                System.out.println("작가 : ");
+                String author = scanner.nextLine();
             }
         }
     }
