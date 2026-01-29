@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Controller {
     private final Scanner scanner;
+    private int id;
     private List<WiseSaying> wiseSayingList = new ArrayList<>();
 
     public Controller(Scanner scanner) {
@@ -18,29 +19,36 @@ public class Controller {
 
     public void run() {
         OutputView.printStartMessage();
-        int id = 0;
 
         while (true) {
             String command = InputView.readCommand(this.scanner);
 
-            if (command.equals("종료")) {
-                break;
-            } else if (command.equals("등록")) {
-                id++;
-                String content = InputView.readContent(this.scanner);
-                String author = InputView.readAuthor(this.scanner);
+            if (command.equals("종료")) break;
 
-                WiseSaying wiseSaying = new WiseSaying(id, content, author);
-                wiseSayingList.add(wiseSaying);
-                OutputView.printAddMessage(id);
-
+            if (command.equals("등록")) {
+                actionWrite();
             } else if (command.equals("목록")) {
-                System.out.println("번호 / 작가 / 명언");
-                System.out.println("----------------------");
-                for (WiseSaying i : wiseSayingList) {
-                    OutputView.printList(i.getId(), i.getAuthor(), i.getContent());
-                }
+                actionShowList();
             }
+        }
+    }
+
+    private void actionWrite() {
+        id++;
+        String content = InputView.readContent(this.scanner);
+        String author = InputView.readAuthor(this.scanner);
+
+        WiseSaying wiseSaying = new WiseSaying(id, content, author);
+        wiseSayingList.add(wiseSaying);
+        OutputView.printAddMessage(id);
+    }
+
+    private void actionShowList() {
+        OutputView.pringListBar();
+
+        for (int i = wiseSayingList.size() - 1; i >= 0; i--) {
+            WiseSaying ws = wiseSayingList.get(i);
+            OutputView.printList(ws.getId(), ws.getAuthor(), ws.getContent());
         }
     }
 }
