@@ -11,6 +11,7 @@ build/
 .idea/libraries/
 .idea/gradle.xml
 .idea/p-14471-mission-2-260128.iml
+.idea/uiDesigner.xml
 *.iws
 *.iml
 *.ipr
