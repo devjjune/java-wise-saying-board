@@ -21,4 +21,8 @@ public class OutputView {
     public static void printDeleteMessage(int targetId) {
         System.out.println(targetId + "번 명언이 삭제되었습니다.");
     }
+
+    public static void printNotFoundMessage(int targetId) {
+        System.out.println(targetId + "번 명언은 존재하지 않습니다.");
+    }
 }

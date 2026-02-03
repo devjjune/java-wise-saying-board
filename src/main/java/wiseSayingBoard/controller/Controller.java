@@ -75,6 +75,10 @@ public class Controller {
         }
 
         // == 리스트에서 명언 삭제 ==
+        if (foundWiseSaying == null) {
+            OutputView.printNotFoundMessage(targetId);
+            return;
+        }
         wiseSayingList.remove(foundWiseSaying);
         OutputView.printDeleteMessage(targetId);
     }
