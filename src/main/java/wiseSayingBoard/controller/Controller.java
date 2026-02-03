@@ -29,6 +29,8 @@ public class Controller {
                 actionWrite();
             } else if (command.equals("목록")) {
                 actionShowList();
+            } else if (command.startsWith("삭제?")) {
+                actionDelete(command);
             }
         }
     }
@@ -50,5 +52,30 @@ public class Controller {
             WiseSaying ws = wiseSayingList.get(i);
             OutputView.printList(ws.getId(), ws.getAuthor(), ws.getContent());
         }
+    }
+
+    private void actionDelete(String command) {
+        // == 입력값 분해 (Parse) ==
+        String[] commandBits = command.split("\\?", 2);
+        String actionName = commandBits[0];
+        String queryString = commandBits[1];
+
+        String[] queryBits = queryString.split("=", 2);
+        String paramName = queryBits[0];
+        int targetId = Integer.parseInt(queryBits[1]);
+
+        // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
+        WiseSaying foundWiseSaying = null;
+
+        for (WiseSaying ws : wiseSayingList) {
+            if (ws.getId() == targetId) {
+                foundWiseSaying = ws;
+                break;
+            }
+        }
+
+        // == 리스트에서 명언 삭제 ==
+        wiseSayingList.remove(foundWiseSaying);
+        OutputView.printDeleteMessage(targetId);
     }
 }
