@@ -85,11 +85,11 @@ public class Controller {
             return;
         }
         OutputView.printOriginalContent(foundWiseSaying.getContent());
-        String newContent = InputView.readNewContent(this.scanner);
+        String newContent = InputView.readContent(this.scanner);
         foundWiseSaying.setContent(newContent);
 
         OutputView.printOriginalAuthor(foundWiseSaying.getAuthor());
-        String newAuthor = InputView.readNewAuthor(this.scanner);
+        String newAuthor = InputView.readAuthor(this.scanner);
         foundWiseSaying.setAuthor(newAuthor);
 
         OutputView.printModifyMessage(targetId);
