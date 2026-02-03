@@ -31,6 +31,8 @@ public class Controller {
                 actionShowList();
             } else if (command.startsWith("삭제?")) {
                 actionDelete(command);
+            } else if (command.startsWith("수정?")) {
+                actionModify(command);
             }
         }
     }
@@ -46,7 +48,7 @@ public class Controller {
     }
 
     private void actionShowList() {
-        OutputView.pringListBar();
+        OutputView.printListBar();
 
         for (int i = wiseSayingList.size() - 1; i >= 0; i--) {
             WiseSaying ws = wiseSayingList.get(i);
@@ -56,23 +58,10 @@ public class Controller {
 
     private void actionDelete(String command) {
         // == 입력값 분해 (Parse) ==
-        String[] commandBits = command.split("\\?", 2);
-        String actionName = commandBits[0];
-        String queryString = commandBits[1];
-
-        String[] queryBits = queryString.split("=", 2);
-        String paramName = queryBits[0];
-        int targetId = Integer.parseInt(queryBits[1]);
+        int targetId = parseIdFromCommand(command);
 
         // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
-        WiseSaying foundWiseSaying = null;
-
-        for (WiseSaying ws : wiseSayingList) {
-            if (ws.getId() == targetId) {
-                foundWiseSaying = ws;
-                break;
-            }
-        }
+        WiseSaying foundWiseSaying = findByTargetId(targetId);
 
         // == 리스트에서 명언 삭제 ==
         if (foundWiseSaying == null) {
@@ -81,5 +70,49 @@ public class Controller {
         }
         wiseSayingList.remove(foundWiseSaying);
         OutputView.printDeleteMessage(targetId);
+    }
+
+    private void actionModify(String command) {
+        // == 입력값 분해 (Parse) ==
+        int targetId = parseIdFromCommand(command);
+
+        // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
+        WiseSaying foundWiseSaying = findByTargetId(targetId);
+
+        // == 리스트에서 명언 수정 ==
+        if (foundWiseSaying == null) {
+            OutputView.printNotFoundMessage(targetId);
+            return;
+        }
+        OutputView.printOriginalContent(foundWiseSaying.getContent());
+        String newContent = InputView.readNewContent(this.scanner);
+        foundWiseSaying.setContent(newContent);
+
+        OutputView.printOriginalAuthor(foundWiseSaying.getAuthor());
+        String newAuthor = InputView.readNewAuthor(this.scanner);
+        foundWiseSaying.setAuthor(newAuthor);
+
+        OutputView.printModifyMessage(targetId);
+    }
+
+    private int parseIdFromCommand(String command) {
+        String[] commandBits = command.split("\\?", 2);
+        String actionName = commandBits[0];
+        String queryString = commandBits[1];
+
+        String[] queryBits = queryString.split("=", 2);
+        String paramName = queryBits[0];
+        int targetId = Integer.parseInt(queryBits[1]);
+
+        return targetId;
+    }
+
+    private WiseSaying findByTargetId(int targetId) {
+        for (WiseSaying ws : wiseSayingList) {
+            if (ws.getId() == targetId) {
+                return ws;
+            }
+        }
+        return null;
     }
 }

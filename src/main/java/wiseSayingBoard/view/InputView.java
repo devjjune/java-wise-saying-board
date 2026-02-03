@@ -23,4 +23,18 @@ public class InputView {
 
         return author;
     }
+
+    public static String readNewContent(Scanner scanner) {
+        System.out.println("명언 : ");
+        String newContent = scanner.nextLine();
+
+        return newContent;
+    }
+
+    public static String readNewAuthor(Scanner scanner) {
+        System.out.println("작가 : ");
+        String newAuthor = scanner.nextLine();
+
+        return newAuthor;
+    }
 }
