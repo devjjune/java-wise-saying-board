@@ -7,6 +7,7 @@ import wiseSayingBoard.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.IntStream;
 
 public class Controller {
     private final Scanner scanner;
@@ -108,11 +109,9 @@ public class Controller {
     }
 
     private WiseSaying findByTargetId(int targetId) {
-        for (WiseSaying ws : wiseSayingList) {
-            if (ws.getId() == targetId) {
-                return ws;
-            }
-        }
-        return null;
+        return wiseSayingList.stream()
+                .filter(ws -> ws.getId() == targetId)
+                .findFirst()
+                .orElse(null);
     }
 }
