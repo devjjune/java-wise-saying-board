@@ -33,9 +33,9 @@ public class Controller {
             } else if (actionName.equals("목록")) {
                 actionShowList();
             } else if (actionName.equals("삭제")) {
-                actionDelete(command);
+                actionDelete(rq);
             } else if (actionName.equals("수정")) {
-                actionModify(command);
+                actionModify(rq);
             }
         }
     }
@@ -59,9 +59,9 @@ public class Controller {
         }
     }
 
-    private void actionDelete(String command) {
+    private void actionDelete(Rq rq) {
         // == 입력값 분해 (Parse) ==
-        int targetId = parseIdFromCommand(command);
+        int targetId = rq.getParamAsInt("id");
 
         // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
         WiseSaying foundWiseSaying = findByTargetId(targetId);
@@ -75,9 +75,9 @@ public class Controller {
         OutputView.printDeleteMessage(targetId);
     }
 
-    private void actionModify(String command) {
+    private void actionModify(Rq rq) {
         // == 입력값 분해 (Parse) ==
-        int targetId = parseIdFromCommand(command);
+        int targetId = rq.getParamAsInt("id");
 
         // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
         WiseSaying foundWiseSaying = findByTargetId(targetId);
@@ -96,16 +96,6 @@ public class Controller {
         foundWiseSaying.setAuthor(newAuthor);
 
         OutputView.printModifyMessage(targetId);
-    }
-
-    private int parseIdFromCommand(String command) {
-        String[] commandBits = command.split("\\?", 2);
-        String queryString = commandBits[1]; // id=1
-
-        String[] queryBits = queryString.split("=", 2);
-        int targetId = Integer.parseInt(queryBits[1]);
-
-        return targetId;
     }
 
     private WiseSaying findByTargetId(int targetId) {
