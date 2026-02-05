@@ -1,5 +1,6 @@
 package wiseSayingBoard.controller;
 
+import wiseSayingBoard.Rq;
 import wiseSayingBoard.domain.WiseSaying;
 import wiseSayingBoard.view.InputView;
 import wiseSayingBoard.view.OutputView;
@@ -7,7 +8,6 @@ import wiseSayingBoard.view.OutputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public class Controller {
     private final Scanner scanner;
@@ -23,16 +23,18 @@ public class Controller {
 
         while (true) {
             String command = InputView.readCommand(this.scanner);
+            Rq rq = new Rq(command);
+            String actionName = rq.getActionName();
 
-            if (command.equals("종료")) break;
+            if (actionName.equals("종료")) break;
 
-            if (command.equals("등록")) {
+            if (actionName.equals("등록")) {
                 actionWrite();
-            } else if (command.equals("목록")) {
+            } else if (actionName.equals("목록")) {
                 actionShowList();
-            } else if (command.startsWith("삭제?")) {
+            } else if (actionName.equals("삭제")) {
                 actionDelete(command);
-            } else if (command.startsWith("수정?")) {
+            } else if (actionName.equals("수정")) {
                 actionModify(command);
             }
         }
@@ -98,11 +100,9 @@ public class Controller {
 
     private int parseIdFromCommand(String command) {
         String[] commandBits = command.split("\\?", 2);
-        String actionName = commandBits[0];
-        String queryString = commandBits[1];
+        String queryString = commandBits[1]; // id=1
 
         String[] queryBits = queryString.split("=", 2);
-        String paramName = queryBits[0];
         int targetId = Integer.parseInt(queryBits[1]);
 
         return targetId;
