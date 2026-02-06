@@ -61,7 +61,12 @@ public class Controller {
 
     private void actionDelete(Rq rq) {
         // == 입력값 분해 (Parse) ==
-        int targetId = rq.getParamAsInt("id");
+        int targetId = rq.getParamAsInt("id", -1);
+
+        if (id == -1) {
+            System.out.println("id를 제대로 입력해주세요.");
+            return;
+        }
 
         // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
         WiseSaying foundWiseSaying = findByTargetId(targetId);
@@ -77,7 +82,12 @@ public class Controller {
 
     private void actionModify(Rq rq) {
         // == 입력값 분해 (Parse) ==
-        int targetId = rq.getParamAsInt("id");
+        int targetId = rq.getParamAsInt("id", -1);
+
+        if (id == -1) {
+            System.out.println("id를 제대로 입력해주세요.");
+            return;
+        }
 
         // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
         WiseSaying foundWiseSaying = findByTargetId(targetId);

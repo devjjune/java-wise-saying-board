@@ -20,7 +20,7 @@ public class Rq {
         for (String queryBit : queryBits) {
             String[] bits = queryBit.split("=", 2); // id=1
             String key = bits[0]; // id
-            String value = bits.length > 1? bits[1] : ""; // 1
+            String value = bits.length > 1 ? bits[1] : ""; // 1
 
             paramMap.put(key, value);
         }
@@ -30,7 +30,18 @@ public class Rq {
         return actionName;
     }
 
-    public int getParamAsInt(String key) {
-        return Integer.parseInt(paramMap.get(key));
+    public String getParam(String key, String defaultValue) {
+        if (paramMap.containsKey(key)) {
+            return paramMap.get(key);
+        }
+        return defaultValue;
+    }
+
+    public int getParamAsInt(String key, int defaultValue) {
+        try {
+            return Integer.parseInt(paramMap.get(key));
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 }
