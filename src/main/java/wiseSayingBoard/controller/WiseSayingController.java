@@ -1,5 +1,6 @@
 package wiseSayingBoard.controller;
 
+import system.SystemController;
 import wiseSayingBoard.Rq;
 import wiseSayingBoard.domain.WiseSaying;
 import wiseSayingBoard.view.InputView;
@@ -9,12 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Controller {
+public class WiseSayingController {
     private final Scanner scanner;
     private int id;
     private List<WiseSaying> wiseSayingList = new ArrayList<>();
+    private SystemController systemController = new SystemController();
 
-    public Controller(Scanner scanner) {
+    public WiseSayingController(Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -26,7 +28,10 @@ public class Controller {
             Rq rq = new Rq(command);
             String actionName = rq.getActionName();
 
-            if (actionName.equals("종료")) break;
+            if (actionName.equals("종료")) {
+                systemController.exit();
+                break;
+            }
 
             if (actionName.equals("등록")) {
                 actionWrite();

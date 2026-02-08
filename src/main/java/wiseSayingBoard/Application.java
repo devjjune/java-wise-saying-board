@@ -1,6 +1,6 @@
 package wiseSayingBoard;
 
-import wiseSayingBoard.controller.Controller;
+import wiseSayingBoard.controller.WiseSayingController;
 
 import java.util.Scanner;
 
@@ -8,8 +8,8 @@ public class Application {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Controller controller = new Controller(scanner);
-        controller.run();
+        WiseSayingController wiseSayingController = new WiseSayingController(scanner);
+        wiseSayingController.run();
 
         scanner.close();
     }
