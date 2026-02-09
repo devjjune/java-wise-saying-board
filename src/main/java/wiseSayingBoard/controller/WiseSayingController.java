@@ -3,18 +3,17 @@ package wiseSayingBoard.controller;
 import system.SystemController;
 import wiseSayingBoard.Rq;
 import wiseSayingBoard.domain.WiseSaying;
+import wiseSayingBoard.service.Service;
 import wiseSayingBoard.view.InputView;
 import wiseSayingBoard.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class WiseSayingController {
     private final Scanner scanner;
-    private int id;
-    private List<WiseSaying> wiseSayingList = new ArrayList<>();
     private SystemController systemController = new SystemController();
+    private Service service = new Service();
 
     public WiseSayingController(Scanner scanner) {
         this.scanner = scanner;
@@ -46,77 +45,53 @@ public class WiseSayingController {
     }
 
     private void actionWrite() {
-        id++;
         String content = InputView.readContent(this.scanner);
         String author = InputView.readAuthor(this.scanner);
-
-        WiseSaying wiseSaying = new WiseSaying(id, content, author);
-        wiseSayingList.add(wiseSaying);
-        OutputView.printAddMessage(id);
+        WiseSaying wiseSaying = service.write(content, author);
+        OutputView.printAddMessage(wiseSaying.getId());
     }
 
     private void actionShowList() {
         OutputView.printListBar();
-
-        for (int i = wiseSayingList.size() - 1; i >= 0; i--) {
-            WiseSaying ws = wiseSayingList.get(i);
+        List<WiseSaying> reversedList = service.showList();
+        for (WiseSaying ws : reversedList) {
             OutputView.printList(ws.getId(), ws.getAuthor(), ws.getContent());
         }
     }
 
     private void actionDelete(Rq rq) {
-        // == 입력값 분해 (Parse) ==
         int targetId = rq.getParamAsInt("id", -1);
-
-        if (id == -1) {
+        if (targetId == -1) {
             System.out.println("id를 제대로 입력해주세요.");
             return;
         }
-
-        // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
-        WiseSaying foundWiseSaying = findByTargetId(targetId);
-
-        // == 리스트에서 명언 삭제 ==
+        WiseSaying foundWiseSaying = service.findByTargetId(targetId);
         if (foundWiseSaying == null) {
             OutputView.printNotFoundMessage(targetId);
             return;
         }
-        wiseSayingList.remove(foundWiseSaying);
+        service.delete(foundWiseSaying);
         OutputView.printDeleteMessage(targetId);
     }
 
     private void actionModify(Rq rq) {
-        // == 입력값 분해 (Parse) ==
         int targetId = rq.getParamAsInt("id", -1);
-
-        if (id == -1) {
+        if (targetId == -1) {
             System.out.println("id를 제대로 입력해주세요.");
             return;
         }
-
-        // == wiseSayingList에서 targetId에 해당하는 명언 찾기 ==
-        WiseSaying foundWiseSaying = findByTargetId(targetId);
-
-        // == 리스트에서 명언 수정 ==
+        WiseSaying foundWiseSaying = service.findByTargetId(targetId);
         if (foundWiseSaying == null) {
             OutputView.printNotFoundMessage(targetId);
             return;
         }
         OutputView.printOriginalContent(foundWiseSaying.getContent());
         String newContent = InputView.readContent(this.scanner);
-        foundWiseSaying.setContent(newContent);
 
         OutputView.printOriginalAuthor(foundWiseSaying.getAuthor());
         String newAuthor = InputView.readAuthor(this.scanner);
-        foundWiseSaying.setAuthor(newAuthor);
 
+        service.modify(foundWiseSaying, newContent, newAuthor);
         OutputView.printModifyMessage(targetId);
-    }
-
-    private WiseSaying findByTargetId(int targetId) {
-        return wiseSayingList.stream()
-                .filter(ws -> ws.getId() == targetId)
-                .findFirst()
-                .orElse(null);
     }
 }
