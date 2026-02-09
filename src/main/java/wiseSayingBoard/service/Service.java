@@ -1,44 +1,33 @@
 package wiseSayingBoard.service;
 
 import wiseSayingBoard.domain.WiseSaying;
+import wiseSayingBoard.repository.Repository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Service {
-    private int id;
-    private List<WiseSaying> wiseSayingList = new ArrayList<>();
+    private Repository repo = new Repository();
 
     public WiseSaying write(String content, String author) {
-        WiseSaying wiseSaying = new WiseSaying(++id, content, author);
-        wiseSayingList.add(wiseSaying);
+        int id = repo.generateId();
+        WiseSaying wiseSaying = new WiseSaying(id, content, author);
+        repo.save(wiseSaying);
         return wiseSaying;
     }
 
     public List<WiseSaying> showList() {
-        List<WiseSaying> sortedList = new ArrayList<>(wiseSayingList);
+        List<WiseSaying> sortedList = repo.findAll();
         Collections.reverse(sortedList);
         return sortedList;
     }
 
     public void delete(WiseSaying foundWiseSaying) {
-        wiseSayingList.remove(foundWiseSaying);
+        repo.delete(foundWiseSaying);
     }
 
     public void modify(WiseSaying foundWiseSaying, String newContent, String newAuthor) {
         foundWiseSaying.setContent(newContent);
         foundWiseSaying.setAuthor(newAuthor);
-    }
-
-    public WiseSaying findByTargetId(int targetId) {
-        return wiseSayingList.stream()
-                .filter(ws -> ws.getId() == targetId)
-                .findFirst()
-                .orElse(null);
-    }
-
-    public int getId() {
-        return id;
     }
 }

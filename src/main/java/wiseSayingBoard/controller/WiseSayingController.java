@@ -3,6 +3,7 @@ package wiseSayingBoard.controller;
 import system.SystemController;
 import wiseSayingBoard.Rq;
 import wiseSayingBoard.domain.WiseSaying;
+import wiseSayingBoard.repository.Repository;
 import wiseSayingBoard.service.Service;
 import wiseSayingBoard.view.InputView;
 import wiseSayingBoard.view.OutputView;
@@ -14,6 +15,7 @@ public class WiseSayingController {
     private final Scanner scanner;
     private SystemController systemController = new SystemController();
     private Service service = new Service();
+    private Repository repo = new Repository();
 
     public WiseSayingController(Scanner scanner) {
         this.scanner = scanner;
@@ -65,7 +67,7 @@ public class WiseSayingController {
             System.out.println("id를 제대로 입력해주세요.");
             return;
         }
-        WiseSaying foundWiseSaying = service.findByTargetId(targetId);
+        WiseSaying foundWiseSaying = repo.findById(targetId);
         if (foundWiseSaying == null) {
             OutputView.printNotFoundMessage(targetId);
             return;
@@ -80,7 +82,7 @@ public class WiseSayingController {
             System.out.println("id를 제대로 입력해주세요.");
             return;
         }
-        WiseSaying foundWiseSaying = service.findByTargetId(targetId);
+        WiseSaying foundWiseSaying = repo.findByTargetId(targetId);
         if (foundWiseSaying == null) {
             OutputView.printNotFoundMessage(targetId);
             return;
