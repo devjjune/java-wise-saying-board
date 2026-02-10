@@ -30,4 +30,8 @@ public class Service {
         foundWiseSaying.setContent(newContent);
         foundWiseSaying.setAuthor(newAuthor);
     }
+
+    public WiseSaying findById(int targetId) {
+        return repo.findById(targetId);
+    }
 }
