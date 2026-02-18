@@ -1,5 +1,6 @@
 package wiseSayingBoard.service;
 
+import wiseSayingBoard.AppContext;
 import wiseSayingBoard.domain.WiseSaying;
 import wiseSayingBoard.repository.WiseSayingRepository;
 
@@ -7,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class WiseSayingService {
-    private WiseSayingRepository repo = new WiseSayingRepository();
+    private WiseSayingRepository repo = AppContext.wiseSayingRepository;
 
     public WiseSaying write(String content, String author) {
         WiseSaying wiseSaying = new WiseSaying(0, content, author);

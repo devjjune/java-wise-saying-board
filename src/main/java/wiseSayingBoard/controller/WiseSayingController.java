@@ -1,5 +1,6 @@
 package wiseSayingBoard.controller;
 
+import wiseSayingBoard.AppContext;
 import wiseSayingBoard.Rq;
 import wiseSayingBoard.domain.WiseSaying;
 import wiseSayingBoard.service.WiseSayingService;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 
 public class WiseSayingController {
     private Scanner scanner;
-    private WiseSayingService wiseSayingService = new WiseSayingService();
+    private WiseSayingService wiseSayingService =AppContext.wiseSayingService;
 
     public WiseSayingController(Scanner scanner) {
         this.scanner = scanner;

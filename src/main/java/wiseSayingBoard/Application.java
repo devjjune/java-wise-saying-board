@@ -8,9 +8,9 @@ import wiseSayingBoard.view.OutputView;
 import java.util.Scanner;
 
 public class Application {
-    private Scanner scanner = new Scanner(System.in);
-    private WiseSayingController wiseSayingController = new WiseSayingController(scanner);
-    private SystemController systemController = new SystemController();
+    private Scanner scanner = AppContext.scanner;
+    private WiseSayingController wiseSayingController = AppContext.wiseSayingController;
+    private SystemController systemController = AppContext.systemController;
 
     public void run() {
         OutputView.printStartMessage();
