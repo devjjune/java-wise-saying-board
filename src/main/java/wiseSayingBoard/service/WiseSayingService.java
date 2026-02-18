@@ -1,13 +1,13 @@
 package wiseSayingBoard.service;
 
 import wiseSayingBoard.domain.WiseSaying;
-import wiseSayingBoard.repository.Repository;
+import wiseSayingBoard.repository.WiseSayingRepository;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Service {
-    private Repository repo = new Repository();
+public class WiseSayingService {
+    private WiseSayingRepository repo = new WiseSayingRepository();
 
     public WiseSaying write(String content, String author) {
         WiseSaying wiseSaying = new WiseSaying(0, content, author);

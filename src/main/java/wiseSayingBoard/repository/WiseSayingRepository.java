@@ -5,7 +5,7 @@ import wiseSayingBoard.domain.WiseSaying;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository {
+public class WiseSayingRepository {
     private List<WiseSaying> wiseSayingList = new ArrayList<>();
     private int lastId = 0;
 

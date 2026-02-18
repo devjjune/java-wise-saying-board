@@ -1,4 +1,4 @@
-package system;
+package wiseSayingBoard.controller;
 
 public class SystemController {
     public void exit() {

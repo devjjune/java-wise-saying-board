@@ -1,6 +1,6 @@
 package wiseSayingBoard;
 
-import system.SystemController;
+import wiseSayingBoard.controller.SystemController;
 import wiseSayingBoard.controller.WiseSayingController;
 import wiseSayingBoard.view.InputView;
 import wiseSayingBoard.view.OutputView;
