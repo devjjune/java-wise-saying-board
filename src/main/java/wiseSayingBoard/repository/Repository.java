@@ -9,8 +9,13 @@ public class Repository {
     private List<WiseSaying> wiseSayingList = new ArrayList<>();
     private int lastId = 0;
 
-    public void save(WiseSaying wiseSaying) {
-        wiseSayingList.add(wiseSaying);
+    public WiseSaying save(WiseSaying wiseSaying) {
+        if (wiseSaying.isNew()) { // 새로운 명언 객체일 때
+            lastId++;
+            wiseSaying.setId(lastId);
+            wiseSayingList.add(wiseSaying);
+        }
+        return wiseSaying;
     }
 
     public List<WiseSaying> findAll() {

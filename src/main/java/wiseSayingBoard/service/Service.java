@@ -10,9 +10,8 @@ public class Service {
     private Repository repo = new Repository();
 
     public WiseSaying write(String content, String author) {
-        int id = repo.generateId();
-        WiseSaying wiseSaying = new WiseSaying(id, content, author);
-        repo.save(wiseSaying);
+        WiseSaying wiseSaying = new WiseSaying(0, content, author);
+        wiseSaying = repo.save(wiseSaying);
         return wiseSaying;
     }
 
@@ -29,6 +28,8 @@ public class Service {
     public void modify(WiseSaying foundWiseSaying, String newContent, String newAuthor) {
         foundWiseSaying.setContent(newContent);
         foundWiseSaying.setAuthor(newAuthor);
+
+        repo.save(foundWiseSaying);
     }
 
     public WiseSaying findById(int targetId) {
