@@ -13,7 +13,11 @@ public class Repository {
         if (wiseSaying.isNew()) { // 새로운 명언 객체일 때
             lastId++;
             wiseSaying.setId(lastId);
+            wiseSaying.setCreatedDate(java.time.LocalDateTime.now());
+            wiseSaying.setModifiedDate(java.time.LocalDateTime.now());
             wiseSayingList.add(wiseSaying);
+        } else {
+            wiseSaying.setModifiedDate(java.time.LocalDateTime.now());
         }
         return wiseSaying;
     }

@@ -1,5 +1,9 @@
 package wiseSayingBoard.view;
 
+import wiseSayingBoard.domain.WiseSaying;
+
+import java.time.format.DateTimeFormatter;
+
 public class OutputView {
     public static void printStartMessage() {
         System.out.println("== 명언 앱 ==");
@@ -10,12 +14,13 @@ public class OutputView {
     }
 
     public static void printListBar() {
-        System.out.println("번호 / 작가 / 명언");
-        System.out.println("----------------------");
+        System.out.println("번호 / 작가 / 명언 / 작성일 / 수정일");
+        System.out.println("----------------------------------------");
     }
 
-    public static void printList(int id, String author, String content) {
-        System.out.println(id + " / " + author + " / " + content);
+    public static void printList(WiseSaying ws) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 H시 mm분 ss초");
+        System.out.println("%d / %s / %s / %s / %s".formatted(ws.getId(), ws.getAuthor(), ws.getContent(), ws.getCreatedDate(), ws.getModifiedDate()) );
     }
 
     public static void printDeleteMessage(int targetId) {

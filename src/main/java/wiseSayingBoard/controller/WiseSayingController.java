@@ -28,7 +28,7 @@ public class WiseSayingController {
         OutputView.printListBar();
         List<WiseSaying> reversedList = service.showList();
         for (WiseSaying ws : reversedList) {
-            OutputView.printList(ws.getId(), ws.getAuthor(), ws.getContent());
+            OutputView.printList(ws);
         }
     }
 
